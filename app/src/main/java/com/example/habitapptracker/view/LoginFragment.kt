@@ -1,4 +1,4 @@
-package com.example.habitapp.view
+package com.example.habitapptracker.view
 
 import android.os.Bundle
 import android.view.View
