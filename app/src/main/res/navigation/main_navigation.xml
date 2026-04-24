@@ -6,7 +6,18 @@
 
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.example.habitapptracker.view.LoginFragment"
-        android:label="Login" />
+        android:name="com.example.habitapp.view.LoginFragment"
+        android:label="Login">
+
+        <action
+            android:id="@+id/action_login_to_dashboard"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.example.habitapptracker.view.DashboardFragment"
+        android:label="Dashboard">
+    </fragment>
 
 </navigation>
