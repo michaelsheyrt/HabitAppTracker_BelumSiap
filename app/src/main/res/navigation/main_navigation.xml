@@ -17,6 +17,16 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.habitapptracker.view.DashboardFragment"
-        android:label="Dashboard"/>
+        android:label="Dashboard">
+
+        <action
+            android:id="@+id/action_dashboard_to_create"
+            app:destination="@id/createHabitFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/createHabitFragment"
+        android:name="com.example.habitapptracker.view.CreateHabitFragment"
+        android:label="Create Habit" />
 
 </navigation>
