@@ -47,7 +47,7 @@ class DashboardFragment: Fragment(R.layout.fragment_dashboard)  {
         }
 
         fab.setOnClickListener{
-
+            findNavController().navigate(R.id.action_dashboard_to_create)
         }
     }
 }
