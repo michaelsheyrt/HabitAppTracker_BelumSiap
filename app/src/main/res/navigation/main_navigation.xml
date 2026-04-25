@@ -17,7 +17,6 @@
     <fragment
         android:id="@+id/dashboardFragment"
         android:name="com.example.habitapptracker.view.DashboardFragment"
-        android:label="Dashboard">
-    </fragment>
+        android:label="Dashboard"/>
 
 </navigation>
