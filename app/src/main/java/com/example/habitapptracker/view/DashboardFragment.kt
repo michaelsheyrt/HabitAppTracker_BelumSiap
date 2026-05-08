@@ -37,15 +37,6 @@ class DashboardFragment: Fragment(R.layout.fragment_dashboard)  {
             adapter.notifyDataSetChanged()
         }
 
-        if(viewModel.habits.value.isNullOrEmpty()){
-            viewModel.addHabit(
-                Habit("Minum Air", "Minum 8 gelas", 8, 0, "gelas", "Water")
-            )
-            viewModel.addHabit(
-                Habit("Olahraga", "30 menit olahraga", 30, 0, "menitt", "Fitness")
-            )
-        }
-
         fab.setOnClickListener{
             findNavController().navigate(R.id.action_dashboard_to_create)
         }
