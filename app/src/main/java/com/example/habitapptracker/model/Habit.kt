@@ -11,5 +11,5 @@ data class  Habit(
     val goal: Int,
     val unit: String,
     val icon: String,
-    var currentProgress: Int = 0  // *** CHANGED: dari progress menjadi currentProgress ***
+    var currentProgress: Int = 0
 )
