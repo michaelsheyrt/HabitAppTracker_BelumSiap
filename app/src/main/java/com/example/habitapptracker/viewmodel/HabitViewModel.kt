@@ -1,28 +1,35 @@
 package com.example.habitapptracker.viewmodel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.habitapptracker.database.AppDatabase
 import com.example.habitapptracker.model.Habit
+import kotlinx.coroutines.launch
 
-class HabitViewModel : ViewModel() {
-    private val habitList = mutableListOf<Habit>()
-    private val _habits = MutableLiveData<List<Habit>>()
-    val habits: LiveData<List<Habit>> = _habits
+class HabitViewModel(application: Application) : AndroidViewModel(application) {
 
-    init {
-        _habits.value = habitList
-    }
+    private val habitDao = AppDatabase.getInstance(application).habitDao()
+
+    val habits: LiveData<List<Habit>> = habitDao.getAll()
 
     fun addHabit(habit: Habit) {
-        habitList.add(habit)
-        _habits.value = habitList.toList()
+        viewModelScope.launch {
+            habitDao.insert(habit)
+        }
     }
 
-    fun updateProgress(position: Int, value: Int) {
-        val habit = habitList[position]
-        habit.progress += value
-        if (habit.progress < 0) habit.progress = 0
-        if (habit.progress > habit.goal) habit.progress = habit.goal
-        _habits.value = habitList.toList()
+    fun incrementProgress(habit: Habit) {
+        viewModelScope.launch {
+            val updated = habit.copy(currentProgress = minOf(habit.currentProgress + 1, habit.goal))
+            habitDao.update(updated)
+        }
+    }
+
+    fun decrementProgress(habit: Habit) {
+        viewModelScope.launch {
+            val updated = habit.copy(currentProgress = maxOf(habit.currentProgress - 1, 0))
+            habitDao.update(updated)
+        }
     }
 }

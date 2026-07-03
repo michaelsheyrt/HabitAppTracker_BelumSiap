@@ -39,12 +39,13 @@ class HabitAdapter(
         holder.name.text = habit.name
         holder.desc.text = habit.description
 
-        val percent = if (habit.goal == 0) 0 else (habit.progress * 100) / habit.goal
+        val percent = if (habit.goal == 0) 0 else (habit.currentProgress * 100) / habit.goal
         holder.progress.progress = percent
 
-        holder.txtProgress.text = "${habit.progress} / ${habit.goal} ${habit.unit}"
+        holder.txtProgress.text =
+            "${habit.currentProgress} / ${habit.goal} ${habit.unit}"
 
-        if (habit.progress >= habit.goal) {
+        if (habit.currentProgress >= habit.goal) {
             holder.status.text = "Completed"
             holder.status.setBackgroundColor(Color.parseColor("#4CAF50"))
         } else {
