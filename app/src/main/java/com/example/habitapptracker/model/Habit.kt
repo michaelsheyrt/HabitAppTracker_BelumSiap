@@ -1,10 +1,15 @@
 package com.example.habitapptracker.model
 
-data class Habit(
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "habits")
+data class  Habit(
+    @PrimaryKey(autoGenerate = true) val id: Int = 0,  // *** NEW ***
     val name: String,
     val description: String,
     val goal: Int,
-    var progress: Int = 0,
     val unit: String,
-    val icon: String
+    val icon: String,
+    var currentProgress: Int = 0  // *** CHANGED: dari progress menjadi currentProgress ***
 )
