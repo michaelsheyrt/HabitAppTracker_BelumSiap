@@ -2,7 +2,11 @@ package com.example.habitapptracker.view
 
 import android.os.Bundle
 import android.view.View
-import android.widget.*
+import android.widget.ArrayAdapter
+import android.widget.Button
+import android.widget.EditText
+import android.widget.Spinner
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
@@ -24,13 +28,13 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
         val unit = view.findViewById<EditText>(R.id.etUnit)
         val spinner = view.findViewById<Spinner>(R.id.spIcon)
         val btnSave = view.findViewById<Button>(R.id.btnSave)
+
         val icons = listOf("Water", "Fitness", "Book", "Meditation")
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, icons)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
         btnSave.setOnClickListener {
-
             if (name.text.isEmpty() || desc.text.isEmpty() ||
                 goal.text.isEmpty() || unit.text.isEmpty()
             ) {
@@ -39,18 +43,17 @@ class CreateHabitFragment : Fragment(R.layout.fragment_create_habit) {
             }
 
             val habit = Habit(
-                name.text.toString(),
-                desc.text.toString(),
-                goal.text.toString().toInt(),
-                0,
-                unit.text.toString(),
-                spinner.selectedItem.toString()
+                name = name.text.toString(),
+                description = desc.text.toString(),
+                goal = goal.text.toString().toInt(),
+                unit = unit.text.toString(),
+                icon = spinner.selectedItem.toString(),
+                currentProgress = 0
             )
 
             viewModel.addHabit(habit)
 
             Toast.makeText(requireContext(), "Habit ditambahkan", Toast.LENGTH_SHORT).show()
-
             findNavController().popBackStack()
         }
     }
