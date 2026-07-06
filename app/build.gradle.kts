@@ -18,6 +18,10 @@ android {
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    buildFeatures {
+        dataBinding = true
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
@@ -33,10 +37,6 @@ android {
     }
     kotlinOptions {
         jvmTarget = "11"
-    }
-
-    buildFeatures {
-        dataBinding = true
     }
 }
 
