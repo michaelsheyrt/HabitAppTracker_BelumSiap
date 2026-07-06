@@ -25,6 +25,10 @@
         <action
             android:id="@+id/action_dashboard_to_edit"
             app:destination="@id/editHabitFragment" />
+        <action
+            android:id="@+id/action_dashboard_to_login"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/dashboardFragment" />
     </fragment>
 
     <fragment
