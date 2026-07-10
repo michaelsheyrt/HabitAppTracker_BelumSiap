@@ -1,5 +1,6 @@
 package com.example.habitapptracker.view
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -34,31 +35,28 @@ class DashboardFragment: Fragment()  {
         super.onViewCreated(view, savedInstanceState)
         viewModel = ViewModelProvider(requireActivity())[HabitViewModel::class.java]
 
-        val recycler = view.findViewById<RecyclerView>(R.id.recyclerHabit)
-        val fab = view.findViewById<View>(R.id.fabAdd)
-        lateinit var adapter: HabitAdapter
-
-        adapter = HabitAdapter(mutableListOf()) { position, value ->
-            val habit = adapter.list[position]
-
-            if (value > 0) {
-                viewModel.incrementProgress(habit)
-            } else {
-                viewModel.decrementProgress(habit)
-            }
+        val adapter = HabitAdapter(viewModel) { habit ->
+            val bundle = Bundle().apply { putInt("habitId", habit.id) }
+            findNavController().navigate(R.id.action_dashboard_to_edit, bundle)
         }
 
-        recycler.layoutManager = LinearLayoutManager(requireContext())
-        recycler.adapter = adapter
-
-        viewModel.habits.observe(viewLifecycleOwner){
-            adapter.list.clear()
-            adapter.list.addAll(it)
-            adapter.notifyDataSetChanged()
+        binding.recyclerHabit.layoutManager = LinearLayoutManager(requireContext())
+        binding.recyclerHabit.adapter = adapter
+        viewModel.habits.observe(viewLifecycleOwner)
+        {
+            habits -> adapter.list = habits
         }
-
-        fab.setOnClickListener{
+        binding.fabAdd.setOnClickListener {
             findNavController().navigate(R.id.action_dashboard_to_create)
         }
+        binding.btnLogout.setOnClickListener {
+            val prefs = requireContext().getSharedPreferences("HabitTracker", Context.MODE_PRIVATE)
+            prefs.edit().putBoolean("is_logged_in", false).apply()
+            findNavController().navigate(R.id.action_dashboard_to_login)
+        }
+    }
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }
