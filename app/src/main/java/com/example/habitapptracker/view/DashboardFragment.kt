@@ -36,8 +36,16 @@ class DashboardFragment: Fragment()  {
 
         val recycler = view.findViewById<RecyclerView>(R.id.recyclerHabit)
         val fab = view.findViewById<View>(R.id.fabAdd)
-        val adapter = HabitAdapter(mutableListOf()){position, value ->
-            viewModel.updateProgress(position, value)
+        lateinit var adapter: HabitAdapter
+
+        adapter = HabitAdapter(mutableListOf()) { position, value ->
+            val habit = adapter.list[position]
+
+            if (value > 0) {
+                viewModel.incrementProgress(habit)
+            } else {
+                viewModel.decrementProgress(habit)
+            }
         }
 
         recycler.layoutManager = LinearLayoutManager(requireContext())
